@@ -14,6 +14,7 @@ import translateImage from './translate.png';
 export default [
     {
         name: 'Choose an extension',
+        iconURL: penImage,
         description: 'For developers',
         featured: true
     },
