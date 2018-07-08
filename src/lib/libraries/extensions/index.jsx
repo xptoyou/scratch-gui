@@ -13,6 +13,11 @@ import translateImage from './translate.png';
 
 export default [
     {
+        name: 'Choose an extension',
+        description: 'For developers',
+        featured: true
+    },
+    {
         name: (
             <FormattedMessage
                 defaultMessage="Music"
