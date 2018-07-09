@@ -15,7 +15,13 @@ export default [
     {
         name: 'Choose an extension',
         iconURL: penImage,
-        description: 'For developers',
+        description: (
+            <FormattedMessage
+                defaultMessage="For developers"
+                description="Description for the custom extension selector"
+                id="gui.extension.custom.description"
+            />
+        ),
         featured: true
     },
     {
