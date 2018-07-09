@@ -1,28 +1,36 @@
 var GUI =
-(window["webpackJsonpGUI"] = window["webpackJsonpGUI"] || []).push([[3],{
+(window["webpackJsonpGUI"] = window["webpackJsonpGUI"] || []).push([["blocksonly"],{
 
-/***/ 431:
+/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/lib/index.js?!./src/playground/blocks-only.css":
+/*!***********************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./node_modules/postcss-loader/lib??postcss!./src/playground/blocks-only.css ***!
+  \***********************************************************************************************************************/
+/*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(false);
+exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
 // imports
 
 
 // module
-exports.push([module.i, ".blocks-only_controls_2GEvs {\n    position: absolute;\n    z-index: 2;\n    top: 10px;\n    right: 15px;\n}\n", ""]);
+exports.push([module.i, ".blocks-only_controls_1Fuds {\r\n    position: absolute;\r\n    z-index: 2;\r\n    top: 10px;\r\n    right: 15px;\r\n}\r\n", ""]);
 
 // exports
 exports.locals = {
-	"controls": "blocks-only_controls_2GEvs"
+	"controls": "blocks-only_controls_1Fuds"
 };
 
 /***/ }),
 
-/***/ 432:
+/***/ "./src/playground/blocks-only.css":
+/*!****************************************!*\
+  !*** ./src/playground/blocks-only.css ***!
+  \****************************************/
+/*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(431);
+var content = __webpack_require__(/*! !../../node_modules/css-loader??ref--5-1!../../node_modules/postcss-loader/lib??postcss!./blocks-only.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/lib/index.js?!./src/playground/blocks-only.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -36,7 +44,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(3)(content, options);
+var update = __webpack_require__(/*! ../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -44,43 +52,47 @@ if(false) {}
 
 /***/ }),
 
-/***/ 433:
+/***/ "./src/playground/blocks-only.jsx":
+/*!****************************************!*\
+  !*** ./src/playground/blocks-only.jsx ***!
+  \****************************************/
+/*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _react = __webpack_require__(0);
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(33);
+var _reactDom = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactRedux = __webpack_require__(7);
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
-var _controls = __webpack_require__(266);
+var _controls = __webpack_require__(/*! ../containers/controls.jsx */ "./src/containers/controls.jsx");
 
 var _controls2 = _interopRequireDefault(_controls);
 
-var _blocks = __webpack_require__(331);
+var _blocks = __webpack_require__(/*! ../containers/blocks.jsx */ "./src/containers/blocks.jsx");
 
 var _blocks2 = _interopRequireDefault(_blocks);
 
-var _gui = __webpack_require__(154);
+var _gui = __webpack_require__(/*! ../containers/gui.jsx */ "./src/containers/gui.jsx");
 
 var _gui2 = _interopRequireDefault(_gui);
 
-var _hashParserHoc = __webpack_require__(119);
+var _hashParserHoc = __webpack_require__(/*! ../lib/hash-parser-hoc.jsx */ "./src/lib/hash-parser-hoc.jsx");
 
 var _hashParserHoc2 = _interopRequireDefault(_hashParserHoc);
 
-var _appStateHoc = __webpack_require__(118);
+var _appStateHoc = __webpack_require__(/*! ../lib/app-state-hoc.jsx */ "./src/lib/app-state-hoc.jsx");
 
 var _appStateHoc2 = _interopRequireDefault(_appStateHoc);
 
-var _blocksOnly = __webpack_require__(432);
+var _blocksOnly = __webpack_require__(/*! ./blocks-only.css */ "./src/playground/blocks-only.css");
 
 var _blocksOnly2 = _interopRequireDefault(_blocksOnly);
 
@@ -116,5 +128,5 @@ _reactDom2.default.render(_react2.default.createElement(App, null), appTarget);
 
 /***/ })
 
-},[[433,0]]]);
+},[["./src/playground/blocks-only.jsx","lib.min"]]]);
 //# sourceMappingURL=blocksonly.js.map
