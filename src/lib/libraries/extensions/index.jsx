@@ -13,6 +13,12 @@ import translateImage from './translate.png';
 import customImage from './custom.png';
 import unknownImage from './unknown.png';
 
+import ev3DeviceImage from './device-connection/ev3/ev3-hub-illustration.svg';
+import ev3MenuImage from './device-connection/ev3/ev3-small.svg';
+
+import microbitDeviceImage from './device-connection/microbit/microbit-illustration.svg';
+import microbitMenuImage from './device-connection/microbit/microbit-small.svg';
+
 export default [
     {
         name: 'Choose an extension',
@@ -132,7 +138,10 @@ export default [
                 id="gui.extension.microbit.description"
             />
         ),
-        featured: true
+        featured: true,
+        launchDeviceConnectionFlow: true,
+        deviceImage: microbitDeviceImage,
+        smallDeviceImage: microbitMenuImage
     },
     {
         name: 'LEGO WeDo 2.0',
@@ -159,7 +168,10 @@ export default [
             />
         ),
         featured: true,
-        disabled: true
+        disabled: true,
+        launchDeviceConnectionFlow: true,
+        deviceImage: ev3DeviceImage,
+        smallDeviceImage: ev3MenuImage
     },
     {
         name: 'LEGO Boost',
