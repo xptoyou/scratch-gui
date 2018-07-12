@@ -10,11 +10,13 @@ import wedoImage from './wedo.png';
 import ev3Image from './ev3.png';
 import boostImage from './boost.png';
 import translateImage from './translate.png';
+import customImage from './custom.png';
+import unknownImage from './unknown.png';
 
 export default [
     {
         name: 'Choose an extension',
-        iconURL: penImage,
+        iconURL: customImage,
         description: (
             <FormattedMessage
                 defaultMessage="For developers"
@@ -117,8 +119,7 @@ export default [
                 id="gui.extension.speechrecognition.description"
             />
         ),
-        featured: true,
-        disabled: true
+        featured: true
     },
     {
         name: 'Micro:bit',
@@ -131,8 +132,7 @@ export default [
                 id="gui.extension.microbit.description"
             />
         ),
-        featured: true,
-        disabled: true
+        featured: true
     },
     {
         name: 'LEGO WeDo 2.0',
@@ -145,8 +145,7 @@ export default [
                 id="gui.extension.wedo2.description"
             />
         ),
-        featured: true,
-        disabled: true
+        featured: true
     },
     {
         name: 'LEGO MINDSTORMS EV3',
