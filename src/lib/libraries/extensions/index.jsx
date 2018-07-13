@@ -128,13 +128,13 @@ export default [
         featured: true
     },
     {
-        name: 'Micro:bit',
+        name: 'micro:bit',
         extensionId: 'microbit',
         iconURL: microbitImage,
         description: (
             <FormattedMessage
-                defaultMessage="Connect your projects with the physical world."
-                description="Description for the 'Micro:bit' extension"
+                defaultMessage="Connect your projects with the world."
+                description="Description for the 'micro:bit' extension"
                 id="gui.extension.microbit.description"
             />
         ),
