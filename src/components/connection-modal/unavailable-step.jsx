@@ -6,17 +6,18 @@ import Box from '../box/box.jsx';
 import Dots from './dots.jsx';
 import helpIcon from './icons/help.svg';
 import backIcon from './icons/back.svg';
+import scratchLinkIcon from './icons/scratch-link.png';
 
 import styles from './connection-modal.css';
 
-const ErrorStep = props => (
+const UnavailableStep = props => (
     <Box className={styles.body}>
         <Box className={styles.activityArea}>
             <Box className={styles.centeredRow}>
                 <div className={styles.deviceActivity}>
                     <img
-                        className={styles.deviceActivityIcon}
-                        src={props.deviceImage}
+                        className={styles.scratchLinkIcon}
+                        src={scratchLinkIcon}
                     />
                 </div>
             </Box>
@@ -24,9 +25,9 @@ const ErrorStep = props => (
         <Box className={styles.bottomArea}>
             <div className={styles.instructions}>
                 <FormattedMessage
-                    defaultMessage="Oops, looks like something went wrong."
-                    description="The device connection process has encountered an error."
-                    id="gui.connection.errorMessage"
+                    defaultMessage="Please start Scratch Link and turn on Bluetooth."
+                    description="Scratch link is not installed message"
+                    id="gui.connection.unavailableMessage"
                 />
             </div>
             <Dots
@@ -43,6 +44,8 @@ const ErrorStep = props => (
                         src={backIcon}
                     />
                     <FormattedMessage
+                        defaultMessage="Try again"
+                        description="Button to initiate trying the device connection again after an error"
                         id="gui.connection.tryagainbutton"
                     />
                 </button>
@@ -55,6 +58,8 @@ const ErrorStep = props => (
                         src={helpIcon}
                     />
                     <FormattedMessage
+                        defaultMessage="Help"
+                        description="Button to view help content"
                         id="gui.connection.helpbutton"
                     />
                 </button>
@@ -63,10 +68,9 @@ const ErrorStep = props => (
     </Box>
 );
 
-ErrorStep.propTypes = {
-    deviceImage: PropTypes.string.isRequired,
+UnavailableStep.propTypes = {
     onHelp: PropTypes.func,
     onScanning: PropTypes.func
 };
 
-export default ErrorStep;
+export default UnavailableStep;
