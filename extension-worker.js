@@ -157,7 +157,7 @@ var ExtensionWorker = function () {
             this.extensions.push(extensionObject);
             var serviceName = 'extension.' + this.workerId + '.' + extensionId;
             var promise = dispatch.setService(serviceName, extensionObject).then(function () {
-                return dispatch.call('extensions', 'registerExtensionService', _this2.extensionURL, serviceName);
+                return dispatch.call('extensions', 'registerExtensionService', serviceName, _this2.extensionURL);
             });
             if (this.initialRegistrations) {
                 this.initialRegistrations.push(promise);
