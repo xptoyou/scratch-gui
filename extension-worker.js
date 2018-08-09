@@ -119,6 +119,8 @@ var ExtensionWorker = function () {
 
         this.initialRegistrations = [];
 
+        this.extensionURL = null;
+
         dispatch.waitForConnection.then(function () {
             dispatch.call('extensions', 'allocateWorker').then(function (x) {
                 var _x = _slicedToArray(x, 2),
@@ -126,6 +128,7 @@ var ExtensionWorker = function () {
                     extension = _x[1];
 
                 _this.workerId = id;
+                _this.extensionURL = extension;
 
                 try {
                     importScripts(extension);
@@ -148,11 +151,13 @@ var ExtensionWorker = function () {
     _createClass(ExtensionWorker, [{
         key: 'register',
         value: function register(extensionObject) {
+            var _this2 = this;
+
             var extensionId = this.nextExtensionId++;
             this.extensions.push(extensionObject);
             var serviceName = 'extension.' + this.workerId + '.' + extensionId;
             var promise = dispatch.setService(serviceName, extensionObject).then(function () {
-                return dispatch.call('extensions', 'registerExtensionService', serviceName);
+                return dispatch.call('extensions', 'registerExtensionService', _this2.extensionURL, serviceName);
             });
             if (this.initialRegistrations) {
                 this.initialRegistrations.push(promise);
