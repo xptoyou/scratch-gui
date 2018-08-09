@@ -159,6 +159,12 @@ var ExtensionWorker = function () {
             }
             return promise;
         }
+    }, {
+        key: 'registerWithRuntime',
+        value: function registerWithRuntime(extensionObject) {
+            extensionObject.dispatch = dispatch;
+            this.register(extensionObject);
+        }
     }]);
 
     return ExtensionWorker;
@@ -174,16 +180,17 @@ global.Scratch.TargetType = TargetType;
  */
 var extensionWorker = new ExtensionWorker();
 global.Scratch.extensions = {
-    register: extensionWorker.register.bind(extensionWorker)
+    register: extensionWorker.register.bind(extensionWorker),
+    registerWithRuntime: extensionWorker.registerWithRuntime.bind(extensionWorker)
 };
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
-/***/ "./node_modules/microee/index.js":
-/*!***************************************!*\
-  !*** ./node_modules/microee/index.js ***!
-  \***************************************/
+/***/ "./node_modules/scratch-vm/node_modules/microee/index.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/microee/index.js ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -241,15 +248,15 @@ module.exports = M;
 
 /***/ }),
 
-/***/ "./node_modules/minilog/lib/common/filter.js":
-/*!***************************************************!*\
-  !*** ./node_modules/minilog/lib/common/filter.js ***!
-  \***************************************************/
+/***/ "./node_modules/scratch-vm/node_modules/minilog/lib/common/filter.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/minilog/lib/common/filter.js ***!
+  \***************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 // default filter
-var Transform = __webpack_require__(/*! ./transform.js */ "./node_modules/minilog/lib/common/transform.js");
+var Transform = __webpack_require__(/*! ./transform.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/common/transform.js");
 
 var levelMap = { debug: 1, info: 2, warn: 3, error: 4 };
 
@@ -308,15 +315,15 @@ module.exports = Filter;
 
 /***/ }),
 
-/***/ "./node_modules/minilog/lib/common/minilog.js":
-/*!****************************************************!*\
-  !*** ./node_modules/minilog/lib/common/minilog.js ***!
-  \****************************************************/
+/***/ "./node_modules/scratch-vm/node_modules/minilog/lib/common/minilog.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/minilog/lib/common/minilog.js ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Transform = __webpack_require__(/*! ./transform.js */ "./node_modules/minilog/lib/common/transform.js"),
-    Filter = __webpack_require__(/*! ./filter.js */ "./node_modules/minilog/lib/common/filter.js");
+var Transform = __webpack_require__(/*! ./transform.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/common/transform.js"),
+    Filter = __webpack_require__(/*! ./filter.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/common/filter.js");
 
 var log = new Transform(),
     slice = Array.prototype.slice;
@@ -364,14 +371,14 @@ exports.enable = function() {
 
 /***/ }),
 
-/***/ "./node_modules/minilog/lib/common/transform.js":
-/*!******************************************************!*\
-  !*** ./node_modules/minilog/lib/common/transform.js ***!
-  \******************************************************/
+/***/ "./node_modules/scratch-vm/node_modules/minilog/lib/common/transform.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/minilog/lib/common/transform.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var microee = __webpack_require__(/*! microee */ "./node_modules/microee/index.js");
+var microee = __webpack_require__(/*! microee */ "./node_modules/scratch-vm/node_modules/microee/index.js");
 
 // Implements a subset of Node's stream.Transform - in a cross-platform manner.
 function Transform() {}
@@ -447,14 +454,14 @@ module.exports = Transform;
 
 /***/ }),
 
-/***/ "./node_modules/minilog/lib/web/array.js":
-/*!***********************************************!*\
-  !*** ./node_modules/minilog/lib/web/array.js ***!
-  \***********************************************/
+/***/ "./node_modules/scratch-vm/node_modules/minilog/lib/web/array.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/minilog/lib/web/array.js ***!
+  \***********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Transform = __webpack_require__(/*! ../common/transform.js */ "./node_modules/minilog/lib/common/transform.js"),
+var Transform = __webpack_require__(/*! ../common/transform.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/common/transform.js"),
     cache = [ ];
 
 var logger = new Transform();
@@ -472,14 +479,14 @@ module.exports = logger;
 
 /***/ }),
 
-/***/ "./node_modules/minilog/lib/web/console.js":
-/*!*************************************************!*\
-  !*** ./node_modules/minilog/lib/web/console.js ***!
-  \*************************************************/
+/***/ "./node_modules/scratch-vm/node_modules/minilog/lib/web/console.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/minilog/lib/web/console.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Transform = __webpack_require__(/*! ../common/transform.js */ "./node_modules/minilog/lib/common/transform.js");
+var Transform = __webpack_require__(/*! ../common/transform.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/common/transform.js");
 
 var newlines = /\n+$/,
     logger = new Transform();
@@ -507,23 +514,23 @@ logger.write = function(name, level, args) {
 };
 
 logger.formatters = ['color', 'minilog'];
-logger.color = __webpack_require__(/*! ./formatters/color.js */ "./node_modules/minilog/lib/web/formatters/color.js");
-logger.minilog = __webpack_require__(/*! ./formatters/minilog.js */ "./node_modules/minilog/lib/web/formatters/minilog.js");
+logger.color = __webpack_require__(/*! ./formatters/color.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/web/formatters/color.js");
+logger.minilog = __webpack_require__(/*! ./formatters/minilog.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/web/formatters/minilog.js");
 
 module.exports = logger;
 
 
 /***/ }),
 
-/***/ "./node_modules/minilog/lib/web/formatters/color.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/minilog/lib/web/formatters/color.js ***!
-  \**********************************************************/
+/***/ "./node_modules/scratch-vm/node_modules/minilog/lib/web/formatters/color.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/minilog/lib/web/formatters/color.js ***!
+  \**********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Transform = __webpack_require__(/*! ../../common/transform.js */ "./node_modules/minilog/lib/common/transform.js"),
-    color = __webpack_require__(/*! ./util.js */ "./node_modules/minilog/lib/web/formatters/util.js");
+var Transform = __webpack_require__(/*! ../../common/transform.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/common/transform.js"),
+    color = __webpack_require__(/*! ./util.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/web/formatters/util.js");
 
 var colors = { debug: ['cyan'], info: ['purple' ], warn: [ 'yellow', true ], error: [ 'red', true ] },
     logger = new Transform();
@@ -544,15 +551,15 @@ module.exports = logger;
 
 /***/ }),
 
-/***/ "./node_modules/minilog/lib/web/formatters/minilog.js":
-/*!************************************************************!*\
-  !*** ./node_modules/minilog/lib/web/formatters/minilog.js ***!
-  \************************************************************/
+/***/ "./node_modules/scratch-vm/node_modules/minilog/lib/web/formatters/minilog.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/minilog/lib/web/formatters/minilog.js ***!
+  \************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Transform = __webpack_require__(/*! ../../common/transform.js */ "./node_modules/minilog/lib/common/transform.js"),
-    color = __webpack_require__(/*! ./util.js */ "./node_modules/minilog/lib/web/formatters/util.js"),
+var Transform = __webpack_require__(/*! ../../common/transform.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/common/transform.js"),
+    color = __webpack_require__(/*! ./util.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/web/formatters/util.js"),
     colors = { debug: ['gray'], info: ['purple' ], warn: [ 'yellow', true ], error: [ 'red', true ] },
     logger = new Transform();
 
@@ -581,10 +588,10 @@ module.exports = logger;
 
 /***/ }),
 
-/***/ "./node_modules/minilog/lib/web/formatters/util.js":
-/*!*********************************************************!*\
-  !*** ./node_modules/minilog/lib/web/formatters/util.js ***!
-  \*********************************************************/
+/***/ "./node_modules/scratch-vm/node_modules/minilog/lib/web/formatters/util.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/minilog/lib/web/formatters/util.js ***!
+  \*********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -612,19 +619,19 @@ module.exports = color;
 
 /***/ }),
 
-/***/ "./node_modules/minilog/lib/web/index.js":
-/*!***********************************************!*\
-  !*** ./node_modules/minilog/lib/web/index.js ***!
-  \***********************************************/
+/***/ "./node_modules/scratch-vm/node_modules/minilog/lib/web/index.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/minilog/lib/web/index.js ***!
+  \***********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Minilog = __webpack_require__(/*! ../common/minilog.js */ "./node_modules/minilog/lib/common/minilog.js");
+var Minilog = __webpack_require__(/*! ../common/minilog.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/common/minilog.js");
 
 var oldEnable = Minilog.enable,
     oldDisable = Minilog.disable,
     isChrome = (typeof navigator != 'undefined' && /chrome/i.test(navigator.userAgent)),
-    console = __webpack_require__(/*! ./console.js */ "./node_modules/minilog/lib/web/console.js");
+    console = __webpack_require__(/*! ./console.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/web/console.js");
 
 // Use a more capable logging backend if on Chrome
 Minilog.defaultBackend = (isChrome ? console.minilog : console);
@@ -656,23 +663,23 @@ Minilog.disable = function() {
 exports = module.exports = Minilog;
 
 exports.backends = {
-  array: __webpack_require__(/*! ./array.js */ "./node_modules/minilog/lib/web/array.js"),
+  array: __webpack_require__(/*! ./array.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/web/array.js"),
   browser: Minilog.defaultBackend,
-  localStorage: __webpack_require__(/*! ./localstorage.js */ "./node_modules/minilog/lib/web/localstorage.js"),
-  jQuery: __webpack_require__(/*! ./jquery_simple.js */ "./node_modules/minilog/lib/web/jquery_simple.js")
+  localStorage: __webpack_require__(/*! ./localstorage.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/web/localstorage.js"),
+  jQuery: __webpack_require__(/*! ./jquery_simple.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/web/jquery_simple.js")
 };
 
 
 /***/ }),
 
-/***/ "./node_modules/minilog/lib/web/jquery_simple.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/minilog/lib/web/jquery_simple.js ***!
-  \*******************************************************/
+/***/ "./node_modules/scratch-vm/node_modules/minilog/lib/web/jquery_simple.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/minilog/lib/web/jquery_simple.js ***!
+  \*******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Transform = __webpack_require__(/*! ../common/transform.js */ "./node_modules/minilog/lib/common/transform.js");
+var Transform = __webpack_require__(/*! ../common/transform.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/common/transform.js");
 
 var cid = new Date().valueOf().toString(36);
 
@@ -750,14 +757,14 @@ module.exports = AjaxLogger;
 
 /***/ }),
 
-/***/ "./node_modules/minilog/lib/web/localstorage.js":
-/*!******************************************************!*\
-  !*** ./node_modules/minilog/lib/web/localstorage.js ***!
-  \******************************************************/
+/***/ "./node_modules/scratch-vm/node_modules/minilog/lib/web/localstorage.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/minilog/lib/web/localstorage.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Transform = __webpack_require__(/*! ../common/transform.js */ "./node_modules/minilog/lib/common/transform.js"),
+var Transform = __webpack_require__(/*! ../common/transform.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/common/transform.js"),
     cache = false;
 
 var logger = new Transform();
@@ -1398,7 +1405,7 @@ module.exports = TargetType;
 "use strict";
 
 
-var minilog = __webpack_require__(/*! minilog */ "./node_modules/minilog/lib/web/index.js");
+var minilog = __webpack_require__(/*! minilog */ "./node_modules/scratch-vm/node_modules/minilog/lib/web/index.js");
 minilog.enable();
 
 module.exports = minilog('vm');
