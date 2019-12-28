@@ -13,7 +13,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "html,\r\nbody,\r\n.index_app_2mqDO {\r\n    /* probably unecessary, transitional until layout is refactored */\r\n    width: 100%; \r\n    height: 100%;\r\n    margin: 0;\r\n\r\n    /* Setting min height/width makes the UI scroll below those sizes */\r\n    min-width: 1024px;\r\n    min-height: 640px; /* Min height to fit sprite/backdrop button */\r\n}\r\n\r\n/* @todo: move globally? Safe / side FX, for blocks particularly? */\r\n\r\n* { -webkit-box-sizing: border-box; box-sizing: border-box; }\r\n", ""]);
+exports.push([module.i, "html,\r\nbody,\r\n.index_app_2mqDO {\r\n    /* probably unecessary, transitional until layout is refactored */\r\n    width: 100%;\r\n    height: 100%;\r\n    margin: 0;\r\n\r\n    /* Setting min height/width makes the UI scroll below those sizes */\r\n    min-height: 640px; /* Min height to fit sprite/backdrop button */\r\n}\r\n\r\n/* @todo: move globally? Safe / side FX, for blocks particularly? */\r\n\r\n* { -webkit-box-sizing: border-box; box-sizing: border-box; }\r\n", ""]);
 
 // exports
 exports.locals = {
@@ -79,6 +79,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../lib/supported-browser */ "./src/lib/supported-browser.js");
 /* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./index.css */ "./src/playground/index.css");
 /* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_index_css__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _lib_layout_constants_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../lib/layout-constants.js */ "./src/lib/layout-constants.js");
 // Polyfills
 
 
@@ -91,11 +92,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
- // Register "base" page view
+
+
+var standardStageHeight = _lib_layout_constants_js__WEBPACK_IMPORTED_MODULE_11__["default"].standardStageHeight; // Register "base" page view
 
 _lib_analytics__WEBPACK_IMPORTED_MODULE_6__["default"].pageview('/');
 var appTarget = document.createElement('div');
 appTarget.className = _index_css__WEBPACK_IMPORTED_MODULE_10___default.a.app;
+appTarget.style.minHeight = standardStageHeight + 280 + 'px';
 document.body.appendChild(appTarget);
 
 if (Object(_lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__["default"])()) {
@@ -173,10 +177,10 @@ var handleTelemetryModalOptOut = function handleTelemetryModalOptOut() {
   // the hierarchy of HOC constructor calls clearer here; it has nothing to do with redux's
   // ability to compose reducers.
 
-  var WrappedGui = Object(redux__WEBPACK_IMPORTED_MODULE_2__["compose"])(_lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], _lib_hash_parser_hoc_jsx__WEBPACK_IMPORTED_MODULE_5__["default"])(_containers_gui_jsx__WEBPACK_IMPORTED_MODULE_4__["default"]); // TODO a hack for testing the backpack, allow backpack host to be set by url param
+  var WrappedGui = Object(redux__WEBPACK_IMPORTED_MODULE_2__["compose"])(_lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], _lib_hash_parser_hoc_jsx__WEBPACK_IMPORTED_MODULE_5__["default"])(_containers_gui_jsx__WEBPACK_IMPORTED_MODULE_4__["default"]); // TODO a hack for enabling the backpack; on the vanilla version it lets you
+  // set the host using ?backpack_host in the URL
 
-  var backpackHostMatches = window.location.href.match(/[?&]backpack_host=([^&]*)&?/);
-  var backpackHost = backpackHostMatches ? backpackHostMatches[1] : null;
+  var backpackHost = 'yep';
   var scratchDesktopMatches = window.location.href.match(/[?&]isScratchDesktop=([^&]+)/);
   var simulateScratchDesktop;
 
@@ -205,7 +209,6 @@ var handleTelemetryModalOptOut = function handleTelemetryModalOptOut() {
   }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(WrappedGui, {
     canEditTitle: true,
     backpackVisible: true,
-    showComingSoon: true,
     backpackHost: backpackHost,
     canSave: false,
     onClickLogo: onClickLogo
