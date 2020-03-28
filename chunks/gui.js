@@ -43,7 +43,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 
 var onClickLogo = function onClickLogo() {
-  window.location = 'https://sheeptester.github.io/';
+  window.location = 'https://github.com/SheepTester/scratch-gui#url-parameters';
 };
 
 var handleTelemetryModalCancel = function handleTelemetryModalCancel() {
@@ -106,20 +106,10 @@ var handleTelemetryModalOptOut = function handleTelemetryModalOptOut() {
     }
   }
 
-  var projectFileMatches = window.location.href.match(/[?&]project=([^&]*)&?/);
-  var projectFile = projectFileMatches ? decodeURIComponent(projectFileMatches[1]) : null;
   var extensionURLMatches = window.location.href.match(/[?&](?:extension|url)=([^&]*)&?/);
   var extensionURL = extensionURLMatches ? decodeURIComponent(extensionURLMatches[1]) : null;
 
   var onVmInit = function onVmInit(vm) {
-    if (projectFile) {
-      fetch(projectFile).then(function (response) {
-        return response.arrayBuffer();
-      }).then(function (arrayBuffer) {
-        vm.loadProject(arrayBuffer);
-      });
-    }
-
     if (extensionURL) {
       vm.extensionManager.loadExtensionURL(extensionURL);
     }
@@ -157,7 +147,7 @@ var handleTelemetryModalOptOut = function handleTelemetryModalOptOut() {
 
 /***/ }),
 
-/***/ 710:
+/***/ 709:
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -200,11 +190,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(48);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _lib_analytics__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(76);
+/* harmony import */ var _lib_analytics__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(77);
 /* harmony import */ var _lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(105);
 /* harmony import */ var _components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(219);
 /* harmony import */ var _lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(220);
-/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(710);
+/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(709);
 /* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_index_css__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _lib_layout_constants_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(13);
 // Polyfills
