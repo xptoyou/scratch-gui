@@ -1,7 +1,7 @@
 var GUI =
 (window["webpackJsonpGUI"] = window["webpackJsonpGUI"] || []).push([[4],{
 
-/***/ 1425:
+/***/ 1428:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(11)(false);
@@ -18,7 +18,7 @@ exports.locals = {
 
 /***/ }),
 
-/***/ 1426:
+/***/ 1429:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -32,7 +32,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _containers_gui_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(114);
 /* harmony import */ var _lib_hash_parser_hoc_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(139);
 /* harmony import */ var _lib_log_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(29);
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 
 
@@ -57,6 +57,30 @@ var handleTelemetryModalOptIn = function handleTelemetryModalOptIn() {
 var handleTelemetryModalOptOut = function handleTelemetryModalOptOut() {
   Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])('User opted out of telemetry');
 };
+
+function urlOptionValue(name, defaultValue) {
+  var matches = window.location.href.match(new RegExp("[?&]".concat(name, "=([^&]*)&?")));
+  return matches ? matches[1] : defaultValue;
+}
+
+function urlFlag(name) {
+  var defaultValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  var matches = window.location.href.match(new RegExp("[?&]".concat(name, "=([^&]+)")));
+  var yes = defaultValue;
+
+  if (matches) {
+    try {
+      // parse 'true' into `true`, 'false' into `false`, etc.
+      yes = JSON.parse(matches[1]);
+    } catch (_unused) {
+      // it's not JSON so just use the string
+      // note that a typo like "falsy" will be treated as true
+      yes = matches[1];
+    }
+  }
+
+  return yes;
+}
 /*
  * Render the GUI playground. This is a separate function because importing anything
  * that instantiates the VM causes unsupported browsers to crash
@@ -69,50 +93,49 @@ var handleTelemetryModalOptOut = function handleTelemetryModalOptOut() {
   // the hierarchy of HOC constructor calls clearer here; it has nothing to do with redux's
   // ability to compose reducers.
 
-  var WrappedGui = Object(redux__WEBPACK_IMPORTED_MODULE_2__[/* compose */ "d"])(_lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"], _lib_hash_parser_hoc_jsx__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"])(_containers_gui_jsx__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"]); // TODO a hack for testing the backpack, allow backpack host to be set by url param
+  var WrappedGui = Object(redux__WEBPACK_IMPORTED_MODULE_2__[/* compose */ "d"])(_lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"], _lib_hash_parser_hoc_jsx__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"])(_containers_gui_jsx__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"]);
+  var loadGriffpatch = urlFlag('load_griffpatch', false);
+
+  if (loadGriffpatch) {
+    // From https://github.com/griffpatch/Scratch3-Dev-Tools/blob/master/inject.user.js
+    // Ideally, I'd just load inject.user.js directly, but jsdelivr seems to omit it.
+    document.head.appendChild(Object.assign(document.createElement('script'), {
+      src: 'https://cdn.jsdelivr.net/gh/griffpatch/Scratch3-Dev-Tools/inject3.js'
+    }));
+    document.head.appendChild(Object.assign(document.createElement('link'), {
+      href: 'https://cdn.jsdelivr.net/gh/griffpatch/Scratch3-Dev-Tools/inject.css',
+      rel: 'stylesheet'
+    }));
+  }
+
+  var loadPlugin = urlOptionValue('load_plugin', null);
+
+  if (loadPlugin) {
+    document.head.appendChild(Object.assign(document.createElement('script'), {
+      src: decodeURIComponent(loadPlugin)
+    }));
+  } // TODO a hack for testing the backpack, allow backpack host to be set by url param
   // (Currently ignored; it'll always use localStorage)
 
-  var backpackHostMatches = window.location.href.match(/[?&]backpack_host=([^&]*)&?/);
-  var backpackHost = backpackHostMatches ? backpackHostMatches[1] : 'localStorage';
-  var cloudHostMatches = window.location.href.match(/[?&]cloud_host=([^&]*)&?/);
-  var cloudHost = cloudHostMatches ? decodeURIComponent(cloudHostMatches[1]) : 'localStorage';
-  var usernameMatches = window.location.href.match(/[?&]username=([^&]*)&?/);
-  var username = usernameMatches ? usernameMatches[1] : 'username';
-  var scratchDesktopMatches = window.location.href.match(/[?&]isScratchDesktop=([^&]+)/);
-  var simulateScratchDesktop;
 
-  if (scratchDesktopMatches) {
-    try {
-      // parse 'true' into `true`, 'false' into `false`, etc.
-      simulateScratchDesktop = JSON.parse(scratchDesktopMatches[1]);
-    } catch (_unused) {
-      // it's not JSON so just use the string
-      // note that a typo like "falsy" will be treated as true
-      simulateScratchDesktop = scratchDesktopMatches[1];
-    }
-  }
-
-  var compatibilityModeMatches = window.location.href.match(/[?&]compatibility_mode=([^&]+)/);
-  var compatibilityMode = true;
-
-  if (compatibilityModeMatches) {
-    try {
-      // parse 'true' into `true`, 'false' into `false`, etc.
-      compatibilityMode = JSON.parse(compatibilityModeMatches[1]);
-    } catch (_unused2) {
-      // it's not JSON so just use the string
-      // note that a typo like "falsy" will be treated as true
-      compatibilityMode = compatibilityModeMatches[1];
-    }
-  }
-
-  var extensionURLMatches = window.location.href.match(/[?&](?:extension|url)=([^&]*)&?/);
-  var extensionURL = extensionURLMatches ? decodeURIComponent(extensionURLMatches[1]) : null;
+  var backpackHost = decodeURIComponent(urlOptionValue('backpack_host', 'localStorage'));
+  var cloudHost = decodeURIComponent(urlOptionValue('cloud_host', 'localStorage'));
+  var username = urlOptionValue('username', 'username');
+  var simulateScratchDesktop = urlFlag('isScratchDesktop', false);
+  var compatibilityMode = urlFlag('compatibility_mode', true);
+  var extensionURL = urlOptionValue('(?:extension|url)', null);
+  var imposeLimits = urlFlag('limits', true);
 
   var onVmInit = function onVmInit(vm) {
     if (extensionURL) {
-      vm.extensionManager.loadExtensionURL(extensionURL);
+      vm.extensionManager.loadExtensionURL(decodeURIComponent(extensionURL));
     }
+
+    if (!imposeLimits) {
+      vm.requireLimits(imposeLimits);
+    }
+
+    window.vm = vm;
   };
 
   if ( true && (typeof window === "undefined" ? "undefined" : _typeof(window)) === 'object') {
@@ -123,7 +146,7 @@ var handleTelemetryModalOptOut = function handleTelemetryModalOptOut() {
   }
 
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( // important: this is checking whether `simulateScratchDesktop` is truthy, not just defined!
-  simulateScratchDesktop ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(WrappedGui, {
+  simulateScratchDesktop ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(WrappedGui, {
     canEditTitle: true,
     isScratchDesktop: true,
     showTelemetryModal: true,
@@ -131,7 +154,7 @@ var handleTelemetryModalOptOut = function handleTelemetryModalOptOut() {
     onTelemetryModalCancel: handleTelemetryModalCancel,
     onTelemetryModalOptIn: handleTelemetryModalOptIn,
     onTelemetryModalOptOut: handleTelemetryModalOptOut
-  }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(WrappedGui, {
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(WrappedGui, {
     canEditTitle: true,
     backpackVisible: true,
     backpackHost: backpackHost,
@@ -147,11 +170,11 @@ var handleTelemetryModalOptOut = function handleTelemetryModalOptOut() {
 
 /***/ }),
 
-/***/ 709:
+/***/ 711:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(1425);
+var content = __webpack_require__(1428);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -173,18 +196,18 @@ if(false) {}
 
 /***/ }),
 
-/***/ 952:
+/***/ 955:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var es6_object_assign_auto__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(953);
+/* harmony import */ var es6_object_assign_auto__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(956);
 /* harmony import */ var es6_object_assign_auto__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(es6_object_assign_auto__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_fn_array_includes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(955);
+/* harmony import */ var core_js_fn_array_includes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(958);
 /* harmony import */ var core_js_fn_array_includes__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_fn_array_includes__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var core_js_fn_promise_finally__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(967);
+/* harmony import */ var core_js_fn_promise_finally__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(970);
 /* harmony import */ var core_js_fn_promise_finally__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_fn_promise_finally__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var intl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(984);
+/* harmony import */ var intl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(987);
 /* harmony import */ var intl__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(intl__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_4__);
@@ -192,9 +215,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _lib_analytics__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(77);
 /* harmony import */ var _lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(105);
-/* harmony import */ var _components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(219);
-/* harmony import */ var _lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(220);
-/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(709);
+/* harmony import */ var _components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(220);
+/* harmony import */ var _lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(221);
+/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(711);
 /* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_index_css__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _lib_layout_constants_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(13);
 // Polyfills
@@ -222,7 +245,7 @@ document.body.appendChild(appTarget);
 if (Object(_lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__[/* default */ "a"])()) {
   // require needed here to avoid importing unsupported browser-crashing code
   // at the top level
-  __webpack_require__(1426).default(appTarget);
+  __webpack_require__(1429).default(appTarget);
 } else {
   _components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_8__[/* default */ "a"].setAppElement(appTarget);
   var WrappedBrowserModalComponent = Object(_lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"])(_components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_8__[/* default */ "a"], true
@@ -232,19 +255,19 @@ if (Object(_lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__[/* default */ "a"
   var handleBack = function handleBack() {}; // eslint-disable-next-line react/jsx-no-bind
 
 
-  react_dom__WEBPACK_IMPORTED_MODULE_5___default.a.render(react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(WrappedBrowserModalComponent, {
+  react_dom__WEBPACK_IMPORTED_MODULE_5___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(WrappedBrowserModalComponent, {
     onBack: handleBack
   }), appTarget);
 }
 
 /***/ }),
 
-/***/ 986:
+/***/ 989:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ })
 
-},[[952,0]]]);
+},[[955,0]]]);
 //# sourceMappingURL=gui.js.map
