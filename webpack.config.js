@@ -161,6 +161,18 @@ module.exports = [
             new CopyWebpackPlugin([{
                 from: 'extension-worker.{js,js.map}',
                 context: 'node_modules/scratch-vm/dist/web'
+            }]),
+            // Hack: Serve Scratch Addons as static files to avoid Babel messing
+            // with it
+            new CopyWebpackPlugin([{
+                from: '{addon-api,addons,addons-l10n,content-scripts,libraries}/**',
+                to: 'static/addons',
+                context: 'src/ScratchAddons'
+            }]),
+            new CopyWebpackPlugin([{
+                from: '*.js',
+                to: 'static/addonsx',
+                context: 'src/scratch-addons'
             }])
         ])
     })
