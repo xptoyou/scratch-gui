@@ -54,6 +54,10 @@ if (window.location.search.indexOf('height=') !== -1) {
     height = +window.location.search.match(/height=(\d+)/)[1];
 }
 
+// Scale small stage down even more until it is as wide as it would be with
+// stage width 480.
+STAGE_DISPLAY_SCALES[STAGE_DISPLAY_SIZES.small] = Math.min(0.5, 0.5 * 480 / width)
+
 export default {
     standardStageWidth: width,
     standardStageHeight: height,
