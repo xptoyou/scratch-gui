@@ -64,6 +64,7 @@ export default function parseOptionsFromUrl (subDefaults = true) {
         compatibilityMode: parser.urlFlag('compatibility_mode', true),
         fps: parser.urlFlagInt('fps', null),
         extensionURLs: parser.urlFlagMultiple('(?:extension|url)').map(decodeURIComponent),
-        imposeLimits: parser.urlFlag('limits', true)
+        imposeLimits: parser.urlFlag('limits', true),
+        spriteFencing: parser.urlFlag('fencing')
     };
 }

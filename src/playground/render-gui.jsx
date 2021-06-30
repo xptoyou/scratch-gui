@@ -51,7 +51,8 @@ export default appTarget => {
         compatibilityMode,
         fps,
         extensionURLs,
-        imposeLimits
+        imposeLimits,
+        spriteFencing
     } = parseOptionsFromUrl();
 
     if (loadGriffpatch) {
@@ -76,9 +77,7 @@ export default appTarget => {
         for (const extensionURL of extensionURLs) {
             vm.extensionManager.loadExtensionURL(decodeURIComponent(extensionURL));
         }
-        if (!imposeLimits) {
-            vm.requireLimits(imposeLimits);
-        }
+        vm.requireLimits(imposeLimits, { fencing: spriteFencing });
         global.vm = vm;
 
         // Compatibility global `Scratch` for HTMLifier plugins

@@ -192,18 +192,22 @@ class Flags extends React.Component {
             'handleChangeFps',
             'handleChangeExtensionURLs',
             'handleChangeImposeLimits',
+            'handleChangeSpriteFencing',
             'handleChangeWidth',
             'handleChangeHeight'
         ]);
         this.props.setTitle('E羊icques URL settings');
 
-        const { compatibilityMode, fps, ...options } = parseOptionsFromUrl(false)
+        const { compatibilityMode, fps, spriteFencing, ...options } = parseOptionsFromUrl(false)
         this.state = {
             fps: fps !== undefined
                 ? fps
                 : compatibilityMode === false
                 ? 60
                 : undefined,
+            spriteFencing: spriteFencing === undefined
+                ? options.imposeLimits
+                : spriteFencing,
             ...options
         };
     }
@@ -218,6 +222,7 @@ class Flags extends React.Component {
             fps,
             extensionURLs,
             imposeLimits,
+            spriteFencing,
             width,
             height
         } = this.state;
@@ -225,9 +230,14 @@ class Flags extends React.Component {
         if (width !== undefined) params.push(`width=${width}`);
         if (height !== undefined) params.push(`height=${height}`);
         if (username !== undefined) params.push(`username=${encodeURIComponent(username)}`);
-        if (cloudHost !== undefined) params.push(`cloud_host=${encodeURIComponent(cloudHost.replace(/^ws?s:\/\//, ''))}`);
+        if (cloudHost !== undefined) {
+            params.push(`cloud_host=${encodeURIComponent(cloudHost.replace(/^ws?s:\/\//, ''))}`);
+        }
         if (fps !== undefined) params.push(`fps=${fps}`);
         if (imposeLimits !== undefined) params.push(`limits=${imposeLimits}`);
+        if (imposeLimits !== undefined || spriteFencing !== undefined) {
+            params.push(`fencing=${spriteFencing}`);
+        }
         if (loadGriffpatch !== undefined) params.push(`load_griffpatch=${loadGriffpatch}`);
         for (const url of extensionURLs) {
             params.push(`extension=${encodeURIComponent(url)}`);
@@ -266,6 +276,9 @@ class Flags extends React.Component {
     handleChangeImposeLimits (e) {
         this.setState({imposeLimits: e.target.checked});
     }
+    handleChangeSpriteFencing (e) {
+        this.setState({spriteFencing: e.target.checked});
+    }
     handleChangeWidth (e) {
         this.setState({width: +e.target.value});
     }
@@ -287,6 +300,7 @@ class Flags extends React.Component {
             fps = 30,
             extensionURLs = [],
             imposeLimits = true,
+            spriteFencing = true,
             width = 480,
             height = 360
         } = this.state;
@@ -330,6 +344,9 @@ class Flags extends React.Component {
                     <Toggle checked={imposeLimits} onChange={this.handleChangeImposeLimits} name="limits">
                         Enforce reasonable limits?
                         <sup>[1]</sup>
+                    </Toggle>
+                    <Toggle checked={spriteFencing} onChange={this.handleChangeSpriteFencing} name="fencing">
+                        Prevent sprites from moving off-screen (i.e. enable sprite fencing)?
                     </Toggle>
                     <Field value={fps} onChange={this.handleChangeFps} default="30" type="number" name="fps">
                         Frames per second
@@ -387,7 +404,6 @@ class Flags extends React.Component {
                         The following limits are removed if the limits option is disabled:
                     </p>
                     <ul>
-                        <li>Fencing of a sprite's position and size</li>
                         <li>Maximum clone count</li>
                         <li>List length</li>
                         <li>Pen size</li>

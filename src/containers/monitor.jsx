@@ -215,7 +215,6 @@ class Monitor extends React.Component {
                     onSetModeToLarge={isList ? null : this.handleSetModeToLarge}
                     onSetModeToSlider={showSliderOption ? this.handleSetModeToSlider : null}
                     onSliderPromptOpen={this.handleSliderPromptOpen}
-                    bounded={this.props.vm.limits}
                 />
             </React.Fragment>
         );
