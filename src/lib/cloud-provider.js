@@ -66,7 +66,7 @@ class CloudProvider {
                     }
                 });
             } else {
-                this.connection = new WebSocket((location.protocol === 'http:' ? 'ws://' : 'wss://') + this.cloudHost);
+                this.connection = new WebSocket((location.protocol === 'https:' ? 'wss://' : 'ws://') + this.cloudHost);
             }
         } catch (e) {
             log.warn('Websocket support is not available in this browser', e);

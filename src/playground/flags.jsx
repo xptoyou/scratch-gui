@@ -250,7 +250,7 @@ class Flags extends React.Component {
         window.location.href = 'https://github.com/SheepTester/scratch-gui#readme';
     }
     handleChangeLoadGriffpatch (e) {
-        this.setState({loadGriffpatch: e.target.value});
+        this.setState({loadGriffpatch: e.target.checked});
     }
     handleChangeLoadPlugins (list) {
         this.setState({loadPlugins: list});

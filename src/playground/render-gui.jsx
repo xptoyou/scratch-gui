@@ -78,7 +78,24 @@ export default appTarget => {
         if (!imposeLimits) {
             vm.requireLimits(imposeLimits);
         }
-        window.vm = vm;
+        global.vm = vm;
+
+        // Compatibility global `Scratch` for HTMLifier plugins
+        global.Scratch = {
+            vm: vm,
+            get renderer () {
+                return vm.runtime.renderer;
+            },
+            get audioEngine () {
+                return vm.runtime.audioEngine;
+            },
+            get bitmapAdapter () {
+                return vm.runtime.v2BitmapAdapter;
+            },
+            get videoProvider () {
+                return vm.runtime.ioDevices.video.provider;
+            }
+        };
     };
 
     if (process.env.NODE_ENV === 'production' && typeof window === 'object') {
