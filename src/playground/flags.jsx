@@ -189,7 +189,7 @@ class Flags extends React.Component {
             'handleChangeLoadPlugins',
             'handleChangeCloudHost',
             'handleChangeUsername',
-            'handleChangeCompatibilityMode',
+            'handleChangeFps',
             'handleChangeExtensionURLs',
             'handleChangeImposeLimits',
             'handleChangeWidth',
@@ -197,27 +197,14 @@ class Flags extends React.Component {
         ]);
         this.props.setTitle('E羊icques URL settings');
 
-        const {
-            loadGriffpatch = false,
-            loadPlugins = [],
-            cloudHost = '',
-            username = 'username',
-            compatibilityMode = true,
-            extensionURLs = [],
-            imposeLimits = true,
-            width = 480,
-            height = 360
-        } = parseOptionsFromUrl();
+        const { compatibilityMode, fps, ...options } = parseOptionsFromUrl(false)
         this.state = {
-            loadGriffpatch,
-            loadPlugins,
-            cloudHost,
-            username,
-            compatibilityMode,
-            extensionURLs,
-            imposeLimits,
-            width,
-            height
+            fps: fps !== undefined
+                ? fps
+                : compatibilityMode === false
+                ? 60
+                : undefined,
+            ...options
         };
     }
     handleSubmit (e) {
@@ -228,20 +215,29 @@ class Flags extends React.Component {
             loadPlugins,
             cloudHost,
             username,
-            compatibilityMode,
+            fps,
             extensionURLs,
             imposeLimits,
             width,
             height
         } = this.state;
-        const params = `?width=${width}&height=${height}`
-            + `&username=${encodeURIComponent(username)}`
-            + `&cloud_host=${encodeURIComponent(cloudHost.replace(/^ws?s:\/\//, ''))}`
-            + `&compatibility_mode=${compatibilityMode}&limits=${imposeLimits}`
-            + `&load_griffpatch=${loadGriffpatch}`
-            + extensionURLs.map(url => `&extension=${encodeURIComponent(url)}`).join('')
-            + loadPlugins.map(url => `&load_plugin=${encodeURIComponent(url)}`).join('');
-        window.location.href = './index.html' + params + window.location.hash;
+        const params = [];
+        if (width !== undefined) params.push(`width=${width}`);
+        if (height !== undefined) params.push(`height=${height}`);
+        if (username !== undefined) params.push(`username=${encodeURIComponent(username)}`);
+        if (cloudHost !== undefined) params.push(`cloud_host=${encodeURIComponent(cloudHost.replace(/^ws?s:\/\//, ''))}`);
+        if (fps !== undefined) params.push(`fps=${fps}`);
+        if (imposeLimits !== undefined) params.push(`limits=${imposeLimits}`);
+        if (loadGriffpatch !== undefined) params.push(`load_griffpatch=${loadGriffpatch}`);
+        for (const url of extensionURLs) {
+            params.push(`extension=${encodeURIComponent(url)}`);
+        }
+        for (const url of loadPlugins) {
+            params.push(`load_plugin=${encodeURIComponent(url)}`);
+        }
+        window.location.href = './index.html' +
+            (params.length > 0 ? '?' + params.join('&') : '') +
+            window.location.hash;
     }
     handleClickLogo () {
         window.location.href = window.location.href.replace(/flags(\.html)?/, '');
@@ -261,8 +257,8 @@ class Flags extends React.Component {
     handleChangeUsername (e) {
         this.setState({username: e.target.value});
     }
-    handleChangeCompatibilityMode (e) {
-        this.setState({compatibilityMode: e.target.checked});
+    handleChangeFps (e) {
+        this.setState({fps: e.target.value});
     }
     handleChangeExtensionURLs (list) {
         this.setState({extensionURLs: list});
@@ -284,15 +280,15 @@ class Flags extends React.Component {
             ...componentProps
         } = this.props;
         const {
-            loadGriffpatch,
-            loadPlugins,
-            cloudHost,
-            username,
-            compatibilityMode,
-            extensionURLs,
-            imposeLimits,
-            width,
-            height
+            loadGriffpatch = false,
+            loadPlugins = [],
+            cloudHost = '',
+            username = 'username',
+            fps = 30,
+            extensionURLs = [],
+            imposeLimits = true,
+            width = 480,
+            height = 360
         } = this.state;
         return (
             <Box
@@ -335,10 +331,9 @@ class Flags extends React.Component {
                         Enforce reasonable limits?
                         <sup>[1]</sup>
                     </Toggle>
-                    <Toggle checked={compatibilityMode} onChange={this.handleChangeCompatibilityMode} name="compatibility_mode">
-                        Compatibility mode?
-                        <sup>[2]</sup>
-                    </Toggle>
+                    <Field value={fps} onChange={this.handleChangeFps} default="30" type="number" name="fps">
+                        Frames per second
+                    </Field>
                     <List
                         label="Extensions"
                         value={extensionURLs}

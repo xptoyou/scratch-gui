@@ -49,6 +49,7 @@ export default appTarget => {
         username,
         simulateScratchDesktop,
         compatibilityMode,
+        fps,
         extensionURLs,
         imposeLimits
     } = parseOptionsFromUrl();
@@ -120,7 +121,7 @@ export default appTarget => {
                 backpackVisible
                 backpackHost={backpackHost}
                 cloudHost={cloudHost}
-                compatibilityMode={compatibilityMode}
+                compatibilityMode={fps || compatibilityMode}
                 hasCloudPermission={true}
                 canSave={false}
                 onClickLogo={onClickLogo}
