@@ -40,7 +40,7 @@ class ListMonitorScroller extends React.Component {
                 <div className={styles.listIndex}>{index + 1 /* one indexed */}</div>
                 <div
                     className={styles.listValue}
-                    dataIndex={index}
+                    data-index={index}
                     style={{background: this.props.categoryColor}}
                     onClick={this.props.draggable ? this.handleEventFactory(index) : null}
                 >
@@ -48,7 +48,7 @@ class ListMonitorScroller extends React.Component {
                         <div className={styles.inputWrapper}>
                             <input
                                 autoFocus
-                                autoComplete={false}
+                                autoComplete="false"
                                 className={classNames(styles.listInput, 'no-drag')}
                                 spellCheck={false}
                                 type="text"

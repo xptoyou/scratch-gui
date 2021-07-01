@@ -49,7 +49,10 @@ const MonitorList = props => (
 
 MonitorList.propTypes = {
     draggable: PropTypes.bool.isRequired,
-    monitors: PropTypes.instanceOf(OrderedMap),
+    // This was being annoying because during development scratch-vm has a
+    // different immutable.js, so React gets angry when their prototypes don't
+    // match.
+    // monitors: PropTypes.instanceOf(OrderedMap),
     onMonitorChange: PropTypes.func.isRequired,
     stageSize: PropTypes.shape({
         width: PropTypes.number,
