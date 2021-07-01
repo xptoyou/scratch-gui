@@ -59,6 +59,7 @@ export default function parseOptionsFromUrl (subDefaults = true) {
         loadPlugins: parser.urlFlagMultiple('load_plugin').map(decodeURIComponent),
         backpackHost: backpackHost && decodeURIComponent(backpackHost),
         cloudHost: cloudHost && decodeURIComponent(cloudHost),
+        cloudSpecial: parser.urlFlag('special_cloud', false),
         username: parser.urlOptionValue('username', 'username'),
         simulateScratchDesktop: parser.urlFlag('isScratchDesktop', false),
         compatibilityMode: parser.urlFlag('compatibility_mode', true),

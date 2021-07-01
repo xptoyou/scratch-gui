@@ -52,7 +52,7 @@ const cloudManagerHOC = function (WrappedComponent) {
             this.disconnectFromCloud();
         }
         canUseCloud (props) {
-            return !!(props.cloudHost && props.username && props.vm && props.projectId && props.hasCloudPermission);
+            return !!(props.username && props.vm && props.projectId && props.hasCloudPermission);
         }
         shouldConnect (props) {
             return !this.isConnected() && this.canUseCloud(props) &&
@@ -75,10 +75,13 @@ const cloudManagerHOC = function (WrappedComponent) {
         }
         connectToCloud () {
             this.cloudProvider = new CloudProvider(
-                this.props.cloudHost,
                 this.props.vm,
                 this.props.username,
-                this.props.projectId);
+                this.props.projectId,
+                this.props.cloudSpecial,
+                this.props.cloudHost === 'localStorage'
+                    ? null
+                    : this.props.cloudHost);
             this.props.vm.setCloudProvider(this.cloudProvider);
         }
         disconnectFromCloud () {
@@ -123,6 +126,7 @@ const cloudManagerHOC = function (WrappedComponent) {
     CloudManager.propTypes = {
         canModifyCloudData: PropTypes.bool.isRequired,
         cloudHost: PropTypes.string,
+        cloudSpecial: PropTypes.bool,
         hasCloudPermission: PropTypes.bool,
         isShowingWithId: PropTypes.bool.isRequired,
         onShowCloudInfo: PropTypes.func,
@@ -133,6 +137,7 @@ const cloudManagerHOC = function (WrappedComponent) {
 
     CloudManager.defaultProps = {
         cloudHost: null,
+        cloudSpecial: false,
         hasCloudPermission: false,
         onShowCloudInfo: () => {},
         username: null

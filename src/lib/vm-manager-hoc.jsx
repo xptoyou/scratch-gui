@@ -105,6 +105,7 @@ const vmManagerHOC = function (WrappedComponent) {
     VMManager.propTypes = {
         canSave: PropTypes.bool,
         cloudHost: PropTypes.string,
+        cloudSpecial: PropTypes.bool,
         compatibilityMode: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
         fontsLoaded: PropTypes.bool,
         isLoadingWithId: PropTypes.bool,

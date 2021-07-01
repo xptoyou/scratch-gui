@@ -188,6 +188,7 @@ class Flags extends React.Component {
             'handleChangeLoadGriffpatch',
             'handleChangeLoadPlugins',
             'handleChangeCloudHost',
+            'handleChangeCloudSpecial',
             'handleChangeUsername',
             'handleChangeFps',
             'handleChangeExtensionURLs',
@@ -218,6 +219,7 @@ class Flags extends React.Component {
             loadGriffpatch,
             loadPlugins,
             cloudHost,
+            cloudSpecial,
             username,
             fps,
             extensionURLs,
@@ -233,6 +235,7 @@ class Flags extends React.Component {
         if (cloudHost !== undefined) {
             params.push(`cloud_host=${encodeURIComponent(cloudHost.replace(/^ws?s:\/\//, ''))}`);
         }
+        if (cloudSpecial !== undefined) params.push(`special_cloud=${cloudSpecial}`);
         if (fps !== undefined) params.push(`fps=${fps}`);
         if (imposeLimits !== undefined) params.push(`limits=${imposeLimits}`);
         if (imposeLimits !== undefined || spriteFencing !== undefined) {
@@ -263,6 +266,9 @@ class Flags extends React.Component {
     }
     handleChangeCloudHost (e) {
         this.setState({cloudHost: e.target.value});
+    }
+    handleChangeCloudSpecial (e) {
+        this.setState({cloudSpecial: e.target.checked});
     }
     handleChangeUsername (e) {
         this.setState({username: e.target.value});
@@ -296,6 +302,7 @@ class Flags extends React.Component {
             loadGriffpatch = false,
             loadPlugins = [],
             cloudHost = '',
+            cloudSpecial = false,
             username = 'username',
             fps = 30,
             extensionURLs = [],
@@ -389,6 +396,39 @@ class Flags extends React.Component {
                         Custom cloud host
                         <sup>[3]</sup>
                     </Field>
+                    <Toggle checked={cloudSpecial} onChange={this.handleChangeCloudSpecial} name="special_cloud">
+                        <FormattedMessage
+                            defaultMessage="Use {previewFaqLink} from the {wpw}?"
+                            description="Scratch 3.0 FAQ description"
+                            id="gui.aaab.html_idk"
+                            values={{
+                                previewFaqLink: (
+                                    <a
+                                        className={styles.faqLink}
+                                        href="https://github.com/SheepTester/htmlifier/wiki/Special-cloud-behaviours"
+                                    >
+                                        <FormattedMessage
+                                            defaultMessage="special cloud variable behaviours"
+                                            description="link to Scratch 3.0 FAQ page"
+                                            id="gui.aaab.z1fdf"
+                                        />
+                                    </a>
+                                ),
+                                wpw: (
+                                    <a
+                                        className={styles.faqLink}
+                                        href="https://sheeptester.github.io/htmlifier/"
+                                    >
+                                        <FormattedMessage
+                                            defaultMessage="HTMLifier"
+                                            description="link to Scratch 3.0 FAQ page"
+                                            id="gui.aaab.z1fdf2"
+                                        />
+                                    </a>
+                                )
+                            }}
+                        />
+                    </Toggle>
                     <Box className={styles.buttonRow}>
                         <button
                             type="submit"

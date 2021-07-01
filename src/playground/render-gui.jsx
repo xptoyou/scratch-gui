@@ -46,6 +46,7 @@ export default appTarget => {
         loadPlugins,
         backpackHost,
         cloudHost,
+        cloudSpecial,
         username,
         simulateScratchDesktop,
         compatibilityMode,
@@ -80,7 +81,8 @@ export default appTarget => {
         vm.requireLimits(imposeLimits, { fencing: spriteFencing });
         global.vm = vm;
 
-        // Compatibility global `Scratch` for HTMLifier plugins
+        // Compatibility global `Scratch` and `setCloud` for HTMLifier plugins
+
         global.Scratch = {
             vm: vm,
             get renderer () {
@@ -96,6 +98,16 @@ export default appTarget => {
                 return vm.runtime.ioDevices.video.provider;
             }
         };
+
+        const CLOUD_PREFIX = '\u2601 ';
+        global.setCloud = (name, value) => {
+            vm.postIOData('cloud', {
+                varUpdate: {
+                    name: CLOUD_PREFIX + name,
+                    value
+                }
+            });
+        }
     };
 
     if (process.env.NODE_ENV === 'production' && typeof window === 'object') {
@@ -120,6 +132,7 @@ export default appTarget => {
                 backpackVisible
                 backpackHost={backpackHost}
                 cloudHost={cloudHost}
+                cloudSpecial={cloudSpecial}
                 compatibilityMode={fps || compatibilityMode}
                 hasCloudPermission={true}
                 canSave={false}
