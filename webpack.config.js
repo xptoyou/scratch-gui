@@ -6,6 +6,7 @@ var webpack = require('webpack');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+var CreateFileWebpack = require('create-file-webpack');
 
 // PostCss
 var autoprefixer = require('autoprefixer');
@@ -158,6 +159,11 @@ module.exports = [
                 to: '16-9',
                 context: 'src/examples/16-9'
             }]),
+            new CreateFileWebpack({
+                path: path.resolve(__dirname, 'build'),
+                fileName: 'version.txt',
+                content: new Date().toISOString()
+            }),
             new CopyWebpackPlugin([{
                 from: 'extension-worker.{js,js.map}',
                 context: 'node_modules/scratch-vm/dist/web'
