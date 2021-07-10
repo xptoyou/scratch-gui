@@ -2,6 +2,8 @@
 
 The mod is available at https://sheeptester.github.io/scratch-gui/.
 
+The name is pronounced /ɛjɑŋ˧˥ˈik/ ("eh," "yahng" with a rising tone, stressed "EEK"). It comes from English "epic" but with *-cques* from Ja**cques**, producing "epicques" with stress and vowels as it would be in French. Then, I substituted the p with 羊, which is pronounced *yáng* in Mandarin. The name is quite unfriendly to pronounce and write, so any alternative spellings or pronunciations are tolerated.
+
 ## URL parameters
 
 The URLs in URL parameters should be [URI encoded](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent).
